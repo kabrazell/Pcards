@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/kabrazell/pcards#readme",
   "dependencies": {
+    "debug": "^2.4.5",
     "hapi": "^16.0.1",
     "lodash": "^4.17.2"
   }
