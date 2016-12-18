@@ -5,7 +5,8 @@ const Hapi = require('hapi');
 const debug = require('debug')('server')
 const _ = require('lodash')
 
-const cardsroutes = require('./routes/cards')
+const cardroutes = require('./routes/card')
+const deckroutes = require('./routes/deck')
 
 const server = new Hapi.Server();
 const default_port = 8000
@@ -26,7 +27,8 @@ server.route({
 });
 
 //Add Routes
-server.route(cardsroutes)
+server.route(cardroutes)
+server.route(deckroutes)
 
 server.start((err) => {
 
