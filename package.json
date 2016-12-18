@@ -1,0 +1,23 @@
+{
+  "name": "pcards",
+  "version": "0.0.0",
+  "description": "poker cards",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kabrazell/pcards.git"
+  },
+  "author": "Kyle Brazell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kabrazell/pcards/issues"
+  },
+  "homepage": "https://github.com/kabrazell/pcards#readme",
+  "dependencies": {
+    "hapi": "^16.0.1",
+    "lodash": "^4.17.2"
+  }
+}
