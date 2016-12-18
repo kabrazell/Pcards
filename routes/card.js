@@ -9,9 +9,9 @@ const cardsService = require('../services/card.js')
 module.exports =
     [{
         method: 'GET',
-        path: '/randomcard/{num}',
+        path: '/cards/randomcard',
         handler: function(request, reply) {
-        	var randomCard = cardsService.getRandomCards({num});
+        	var randomCard = cardsService.getRandomCard();
             return reply(randomCard);
         }
     }
