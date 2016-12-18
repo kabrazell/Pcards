@@ -20,3 +20,5 @@ pcards is a small scale poker simulator for funsies!
 ## General technology notes
 - hapi -- https://hapijs.com/
 - lodash -- https://lodash.com/
+- debug -- https://www.npmjs.com/package/debug
+   - The windows command: set DEBUG=server & nodemon server.js
