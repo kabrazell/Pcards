@@ -14,26 +14,24 @@ const deckService = {
 
     createNewDeck: function(numSuits, numFaces) { //TODO: to handle future combinations?
         var deck = deckService.priv.genOrderedDeck(SUITS, FACES)
-        deckService.priv.shuffle(deck)
+        deck = deckService.priv.shuffle(deck)
         return (deck);
     },
 
-    deal: function(deck, numCards) {// TODO: Handle case where deck is empty?
-        var hand = [];
+    deal: function(deck, numCards) { // TODO: Handle case where deck is empty?
+        var dealtCards = [];
 
         for (numCards; numCards > 0; numCards--) {
-            hand.push(deck.pop())
+            dealtCards.push(deck.pop())
         }
-        return(hand)
+        return (dealtCards)
     },
-    
+
     createThenDeal: function(numCards) {
         var deck = deckService.createNewDeck()
-        var hand = deckService.deal(deck, numCards)
-        return(hand)
+        var dealtCards = deckService.deal(deck, numCards)
+        return (dealtCards)
     },
-
-
     priv: {
         genOrderedDeck: function(numSuits, numFaces) {
             var deck = [];
@@ -44,18 +42,10 @@ const deckService = {
             }
             return deck;
         },
-        shuffle: function(a) {
-            var j, x, i;
-            for (i = a.length; i; i--) {
-                j = Math.floor(Math.random() * i);
-                x = a[i - 1];
-                a[i - 1] = a[j];
-                a[j] = x;
-            }
+        shuffle: function(deck) {
+            return _.shuffle(deck)
         }
     }
 }
-
-
 
 module.exports = deckService;

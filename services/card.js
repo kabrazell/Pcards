@@ -45,7 +45,7 @@ const cardService = {
             return (faces[_.random(0, faces.length - 1)])
         },
         genProperCardName: function(face, suit) {
-            return (face.name + " of " + suit.name)
+            return (_.upperFirst(face.name) + " of " + _.upperFirst(suit.name))
         },
         genAbrvCardName: function(face, suit) {
             return (face.digichar + suit.letter)
