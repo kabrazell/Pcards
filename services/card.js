@@ -4,11 +4,27 @@
 const _ = require('lodash')
 const debug = require('debug')('card_service')
 
-const suits = require('../models/suits.js')
-const faces = require('../models/faces.js')
+const suits = require('../models/suit.js')
+const faces = require('../models/face.js')
 
 const cardService = {
-    getRandomCard: function() {
+    createCard: function(suitNum, faceNum) {
+
+        //debug("faceNum: " + faceNum + ", suitNum: " + suitNum);
+
+        var face = faces[faceNum];
+        var suit = suits[suitNum];
+
+        var card = {
+            name: cardService.priv.genProperCardName(face, suit),
+            abrv: cardService.priv.genAbrvCardName(face, suit),
+            face: face,
+            suit: suit
+        }
+
+        return (card)
+    },
+    getRandomCard: function() { //TODO: delete? should be handled by creating a deck and dealing x
         var cardFace = cardService.priv.getRandomFace()
         var cardSuit = cardService.priv.getRandomSuit()
 
@@ -18,7 +34,7 @@ const cardService = {
             name: cardService.priv.genProperCardName(cardFace, cardSuit),
             abrv: cardService.priv.genAbrvCardName(cardFace, cardSuit)
         }
-        
+
         return (card)
     },
     priv: {
