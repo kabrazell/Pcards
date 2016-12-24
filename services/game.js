@@ -9,16 +9,26 @@ const deckService = require('./deck.js')
 
 const gameService = {
 
-    playWar: function(numPlayers) {
-        const defaultNumPlayers = 2
+    playWar: function(numPlayers, numCards) {
+        const DEFAULTNUMPLAYERS = 2;
         console.log("numPlayers: " + numPlayers)
 
-        var dealtCards = deckService.createThenDeal(defaultNumPlayers); // TODO: hardcoded to default
+        var players = [];
+        var hands = [];
+        var deck = deckService.createNewDeck();
 
-        var winningValue = gameService.priv.getBestCardValue(dealtCards);
-        var winningLocations = gameService.priv.getwinningLocations(dealtCards, winningValue);
+        for (var i = players.length - 1; i >= 0; i--) {
+            var hand = deckService.evaluateHand(deckService.deal(deck, numCards))
+            players[i].number = i
+            players[i].hand = hand
+            hands.push(hand)
+        }
+
+        var winningHand = gameService.priv.getBestHand(hands);
+        var winningLocations = gameService.priv.determineWinners(players, winningHand);
 
         var gameSummary = {
+            totalPLayers: numPlayers,
             players: numPlayers,
             cards: dealtCards,
             winningValue: winningValue,
@@ -27,8 +37,17 @@ const gameService = {
 
         return (gameSummary)
     },
+    evaluateHand: function(hand) {
+
+        var handProperties = {
+            hand: hand
+            highCardValue = deckService.priv.getHighestCardFaceValue(hand);
+            pair = deckService.priv.hasPair(hand)
+        }
+        return handProperties;
+    },
     priv: {
-        getBestCardValue: function(cards) { //TODO: more efficient method?
+        getHighestCardFaceValue: function(cards) {
             var bestCardValue = -1;
             _.forEach(cards, function(card) {
                 if (card.face.value >= bestCardValue) {
@@ -37,7 +56,7 @@ const gameService = {
             })
             return bestCardValue;
         },
-        getwinningLocations: function(cards, winningValue) { //TODO: more efficient method?
+        determineWinners: function(players, winningHand) {
             var winningLocations = []
 
             for (var i = cards.length - 1; i >= 0; i--) {
@@ -46,6 +65,49 @@ const gameService = {
                 }
             }
             return winningLocations;
+        },
+        hasPair: function(hand) {
+            var hasPair = false;
+            var pairCards = [];
+
+            hand.forEach(function(card) {
+                var matchingCards = _.filter(hand, card.value)
+                debug("matchingCards: %o", matchingCards);
+                if (matchingCards.length > 1) {
+                    hasPair = true;
+                    pairCards.push(card)
+                }
+            })
+
+            var pairProperties = {
+                hasPair: hasPair
+                highPairValue: deckService.getHighestCardFaceValue(pairCards)
+            }
+
+            return pairProperties;
+        },
+        getBestHand: function(hands) {
+
+            var bestHand = {
+                highCardValue: -1
+                hasPair: false
+                highPairValue = null
+            };
+
+            hands.forEach(function(hand) {
+                if (hand.highCardValue > bestHand.highCardValue) {
+                    bestHand.highCardValue = hand.highCardValue;
+                }
+
+                if (hand.pair.hasPair && hand.pair.highPairValue > bestHand.highPairValue) {
+                    bestHand.highPairValue = hand.pair.highPairValue
+                    bestHand.hasPair = true;
+                }
+            })
+
+
+
+            return bestHand;
         }
     }
 }
