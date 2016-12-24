@@ -1,8 +1,7 @@
 'use strict';
 
 //IMPORTS
-const Hapi = require('hapi');
-const debug = require('debug')('cardroutes')
+const debug = require('debug')('deckroutes')
 
 const deckService = require('../services/deck.js')
 
